@@ -1,33 +1,49 @@
+/* globals.css */
+
+/* Temel sayfa ayarları */
 html, body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: #0f0f1e;
-  color: white;
+  font-family: 'Inter', sans-serif;
+  background-color: #0f172a; /* koyu arka plan */
+  color: #ffffff; /* metin rengi beyaz */
 }
 
+/* Tüm elemanlarda kutu boyutlamasını kontrol et */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-input, select, button {
-  font-family: inherit;
-}
-
+/* Linkler */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-button:focus, input:focus {
-  outline: none;
-  ring: 2px solid #4f46e5;
+/* Button stili */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out;
+/* Başlıklar ve paragraf */
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
 }
 
-.animate-slide-in {
-  animation: slide-in 0.5s ease-out;
+/* Scrollbar stil (opsiyonel, modern görünüm) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #4ade80;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #1e293b;
 }
