@@ -1,40 +1,42 @@
-'use client';
-import { useState } from 'react';
+"use client";
+
+import { useState } from "react";
 
 export default function StakeForm() {
-  const [token, setToken] = useState('UPWARD');
-  const [amount, setAmount] = useState('100');
+  const [stake, setStake] = useState(0);
+  const [staked, setStaked] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
 
-  async function stake() {
+  const handleStake = () => {
     setLoading(true);
-    setMessage(null);
-    const tx = 'TX-' + Math.random().toString(36).slice(2, 10);
-    const item = { type: 'stake', token, amount: Number(amount), tx, timestamp: new Date().toISOString() };
-    const prev = JSON.parse(localStorage.getItem('intents') || '[]');
-    prev.unshift(item);
-    localStorage.setItem('intents', JSON.stringify(prev.slice(0, 200)));
     setTimeout(() => {
+      setStaked(stake);
+      setStake(0);
       setLoading(false);
-      setMessage(`Staked ${amount} ${token} successfully! Tx: ${tx}`);
     }, 1000);
-  }
+  };
 
   return (
-    <div className="p-4 bg-white/5 rounded-xl border border-white/6">
-      <div className="mb-2">
-        <label>Token</label>
-        <input value={token} onChange={(e) => setToken(e.target.value)} className="w-full p-2 rounded bg-white/10"/>
-      </div>
-      <div className="mb-2">
-        <label>Amount</label>
-        <input value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full p-2 rounded bg-white/10"/>
-      </div>
-      <button onClick={stake} disabled={loading} className="px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-500">
-        {loading ? 'Processing...' : 'Stake'}
+    <div className="bg-cardBg p-6 rounded-2xl shadow-lg w-full max-w-md mx-auto animate-fade-in">
+      <h2 className="text-xl font-bold mb-4">Stake Tokens</h2>
+      <input
+        type="number"
+        value={stake}
+        onChange={(e) => setStake(Number(e.target.value))}
+        placeholder="Amount to stake"
+        className="w-full p-3 rounded-lg mb-4 bg-bgDark border border-gray-700 text-white focus:ring-2 focus:ring-secondary transition"
+      />
+      <button
+        onClick={handleStake}
+        className="w-full bg-secondary hover:bg-green-600 transition rounded-lg py-3 font-bold"
+      >
+        {loading ? "Staking..." : "Stake"}
       </button>
-      {message && <div className="mt-2 text-sm text-green-300">{message}</div>}
+      {staked > 0 && !loading && (
+        <div className="mt-4 p-3 bg-gray-700 rounded-lg animate-fade-in">
+          Successfully staked: <span className="font-bold">{staked} Tokens</span>
+        </div>
+      )}
     </div>
   );
 }
