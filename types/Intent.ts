@@ -1,8 +1,9 @@
 export interface Intent {
-  id: string;
-  type: "swap" | "stake" | "transfer";
+  id: number;
+  type: string;
   amount: number;
   token: string;
-  date: string;
-  status?: "pending" | "completed" | "failed"; // ← opsiyonel hale getirildi
+  tx: string;
+  status: 'pending' | 'fulfilled';
+  date: string; // YYYY-MM-DD
 }
