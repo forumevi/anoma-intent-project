@@ -1,21 +1,32 @@
-"use client";
-
-import Link from "next/link";
-import { useState } from "react";
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+  const pathname = usePathname();
+
+  const links = [
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/dashboard/swap', label: 'Swap' },
+    { href: '/dashboard/stake', label: 'Stake' },
+    { href: '/dashboard/history', label: 'History' },
+  ];
 
   return (
-    <aside className={`bg-cardBg p-4 transition-all ${collapsed ? 'w-20' : 'w-64'} min-h-screen`}>
-      <button onClick={() => setCollapsed(!collapsed)} className="mb-6 text-white">
-        {collapsed ? '➡' : '⬅'}
-      </button>
+    <aside className="bg-gray-800 w-64 p-6 flex flex-col">
+      <h1 className="text-2xl font-bold mb-8">Anoma Demo</h1>
       <nav className="flex flex-col gap-4">
-        <Link href="/dashboard" className="hover:text-primary transition">Dashboard</Link>
-        <Link href="/dashboard/swap" className="hover:text-primary transition">Swap</Link>
-        <Link href="/dashboard/stake" className="hover:text-primary transition">Stake</Link>
-        <Link href="/dashboard/history" className="hover:text-primary transition">History</Link>
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`px-4 py-2 rounded-md ${
+              pathname === link.href ? 'bg-green-600 font-semibold' : 'hover:bg-gray-700'
+            }`}
+          >
+            {link.label}
+          </Link>
+        ))}
       </nav>
     </aside>
   );
