@@ -1,5 +1,10 @@
 /* globals.css */
 
+/* Tailwind direktifleri */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Temel sayfa ayarları */
 html, body {
   padding: 0;
@@ -12,8 +17,6 @@ html, body {
 /* Tüm elemanlarda kutu boyutlamasını kontrol et */
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 /* Linkler */
