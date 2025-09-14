@@ -1,33 +1,10 @@
-"use client";
+// app/dashboard/history/page.tsx
+import HistoryTable from '../../components/HistoryTable';
 
-import HistoryTable from "@/components/HistoryTable";
-import { Intent } from "@/types/Intent";
-
-const sampleHistory: Intent[] = [
-  {
-    id: "1",
-    type: "swap",
-    amount: 1.2,
-    token: "ETH",
-    date: "2025-09-14",
-    status: "completed",
-  },
-  {
-    id: "2",
-    type: "stake",
-    amount: 3,
-    token: "XAN",
-    date: "2025-09-13",
-    status: "pending",
-  },
-  {
-    id: "3",
-    type: "swap",
-    amount: 0.5,
-    token: "XAN",
-    date: "2025-09-12",
-    status: "pending",
-  },
+const sampleHistory = [
+  { id: 1, type: 'Swap', amount: 1.2, token: 'ETH', tx: '0xaaa', status: 'fulfilled', date: '2025-09-15' },
+  { id: 2, type: 'Stake', amount: 3, token: 'XAN', tx: '0xbbb', status: 'pending', date: '2025-09-14' },
+  { id: 3, type: 'Swap', amount: 0.5, token: 'XAN', tx: '0xccc', status: 'pending', date: '2025-09-13' },
 ];
 
 export default function HistoryPage() {
