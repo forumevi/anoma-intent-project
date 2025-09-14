@@ -1,10 +1,15 @@
-import HistoryTable from '../../../components/HistoryTable';
+import HistoryTable from "../../../components/HistoryTable";
+
+const sampleHistory = [
+  { type: "Swap", amount: 1.5, token: "ETH", tx: "0xaaa", status: "fulfilled" },
+  { type: "Stake", amount: 3, token: "XAN", tx: "0xbbb", status: "pending" }
+];
 
 export default function HistoryPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Intent History</h1>
-      <HistoryTable />
+    <div>
+      <h2 className="text-3xl font-bold mb-6">History</h2>
+      <HistoryTable intents={sampleHistory} />
     </div>
   );
 }
