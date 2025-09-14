@@ -1,17 +1,25 @@
-import './globals.css'
-import React from "react";
+// app/layout.tsx
+import './globals.css';
+import Sidebar from '../components/Sidebar';
 
 export const metadata = {
-  title: 'Intent Demo',
-  description: 'Intent-centric Web3 demo'
-}
+  title: 'Anoma Intent Dashboard',
+  description: 'Professional intent-centric Web3 demo',
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>
-        {children}
+      <body className="bg-gray-900 text-white">
+        <div className="flex min-h-screen">
+          <Sidebar />
+          <main className="flex-1 p-6 overflow-auto">{children}</main>
+        </div>
       </body>
     </html>
-  )
+  );
 }
