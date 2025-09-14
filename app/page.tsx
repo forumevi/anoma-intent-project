@@ -1,17 +1,16 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-black text-white">
-      <div className="text-center space-y-6 px-6">
-        <h1 className="text-6xl font-extrabold">Intent Demo</h1>
-        <p className="text-lg text-gray-300 max-w-xl mx-auto">
-          Switch up your regular Web3 practices. Just express your intent, and let the system do the magic ✨
-        </p>
-        <Link href="/dashboard" className="inline-block px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 transition shadow-lg">
-          Enter App →
-        </Link>
-      </div>
-    </main>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-bgDark text-white px-6">
+      <img src="/logo.png" alt="Anoma Logo" className="w-32 mb-6" />
+      <h1 className="text-5xl font-extrabold mb-4 text-center">Welcome to Anoma Intents</h1>
+      <p className="text-center text-lg mb-8 max-w-xl">
+        Explore our intent-based Web3 dashboard. Swap, Stake, and track your intents seamlessly.
+      </p>
+      <Link href="/dashboard" className="px-8 py-4 rounded-lg bg-primary hover:bg-indigo-600 transition font-bold">
+        Go to Dashboard
+      </Link>
+    </div>
   );
 }
