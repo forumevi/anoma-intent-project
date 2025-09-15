@@ -1,37 +1,41 @@
 "use client";
 
-type Intent = {
-  type: string;
-  amount: number;
-  token: string;
-  tx: string;
-  status?: "pending" | "fulfilled";
-};
+import React from "react";
+import { Intent } from "../types/Intent";
+import { motion } from "framer-motion";
 
-export default function HistoryTable({ intents }: { intents: Intent[] }) {
+interface HistoryTableProps {
+  intents: Intent[];
+}
+
+export default function HistoryTable({ intents }: HistoryTableProps) {
   return (
-    <div className="overflow-x-auto animate-fade-in">
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="bg-cardBg">
-            <th className="p-3">Type</th>
-            <th className="p-3">Amount</th>
-            <th className="p-3">Token</th>
-            <th className="p-3">Tx</th>
-            <th className="p-3">Status</th>
+    <div className="overflow-x-auto rounded-lg shadow-lg bg-cardBg p-4">
+      <table className="min-w-full divide-y divide-gray-700">
+        <thead className="bg-gray-800">
+          <tr>
+            <th className="px-4 py-2 text-left text-sm font-semibold text-white">Type</th>
+            <th className="px-4 py-2 text-left text-sm font-semibold text-white">Amount</th>
+            <th className="px-4 py-2 text-left text-sm font-semibold text-white">Token</th>
+            <th className="px-4 py-2 text-left text-sm font-semibold text-white">Tx</th>
+            <th className="px-4 py-2 text-left text-sm font-semibold text-white">Status</th>
           </tr>
         </thead>
-        <tbody>
-          {intents.map((intent, i) => (
-            <tr key={i} className="border-t border-gray-700">
-              <td className="p-3">{intent.type}</td>
-              <td className="p-3">{intent.amount}</td>
-              <td className="p-3">{intent.token}</td>
-              <td className="p-3">{intent.tx}</td>
-              <td className={`p-3 font-bold ${intent.status === 'fulfilled' ? 'text-green-400' : 'text-yellow-400'}`}>
-                {intent.status || 'pending'}
-              </td>
-            </tr>
+        <tbody className="divide-y divide-gray-700">
+          {intents.map((intent, index) => (
+            <motion.tr
+              key={intent.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className="hover:bg-gray-700 transition-colors"
+            >
+              <td className="px-4 py-2">{intent.type}</td>
+              <td className="px-4 py-2">{intent.amount}</td>
+              <td className="px-4 py-2">{intent.token}</td>
+              <td className="px-4 py-2">{intent.tx}</td>
+              <td className="px-4 py-2 capitalize">{intent.status}</td>
+            </motion.tr>
           ))}
         </tbody>
       </table>
