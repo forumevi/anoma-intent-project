@@ -1,34 +1,30 @@
-"use client"
-import { useState } from "react"
-import { CHAINS, ChainConfig } from "../data/chains"
+"use client";
+import React, { useState } from "react";
 
-type Props = {
-  onSelect: (chain: ChainConfig) => void
-}
+const CHAINS = [
+  { id: "ethereum", name: "Ethereum", rpc: "https://eth.llamarpc.com" },
+  { id: "polygon", name: "Polygon", rpc: "https://polygon.llamarpc.com" },
+  { id: "arbitrum", name: "Arbitrum", rpc: "https://arbitrum.llamarpc.com" },
+  { id: "optimism", name: "Optimism", rpc: "https://optimism.llamarpc.com" },
+];
 
-export default function ChainSelector({ onSelect }: Props) {
-  const [selected, setSelected] = useState<ChainConfig>(CHAINS[0])
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const chain = CHAINS.find(c => c.id === Number(e.target.value))!
-    setSelected(chain)
-    onSelect(chain)
-  }
+export default function ChainSelector() {
+  const [selected, setSelected] = useState(CHAINS[0].id);
 
   return (
-    <div className="p-2 bg-cardBg rounded-xl text-white">
-      <label className="mr-2">Select Chain:</label>
+    <div className="mb-6">
+      <label className="block text-sm font-medium mb-2">Select Chain:</label>
       <select
-        value={selected.id}
-        onChange={handleChange}
-        className="bg-bgDark text-white p-2 rounded-lg"
+        value={selected}
+        onChange={(e) => setSelected(e.target.value)}
+        className="p-2 rounded bg-cardBg border border-gray-600 text-white"
       >
-        {CHAINS.map(chain => (
+        {CHAINS.map((chain) => (
           <option key={chain.id} value={chain.id}>
             {chain.name}
           </option>
         ))}
       </select>
     </div>
-  )
+  );
 }
