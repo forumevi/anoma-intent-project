@@ -1,5 +1,7 @@
 // app/layout.tsx
-import './globals.css';
+// app/dashboard/layout.tsx veya app/layout.tsx
+import '../globals.css'; // kök dizine çıkıp globals.css'i import ediyor
+
 import Sidebar from '../components/Sidebar';
 
 export const metadata = {
