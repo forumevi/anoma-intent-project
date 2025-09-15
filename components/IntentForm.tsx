@@ -1,49 +1,78 @@
-'use client';
-import { useState } from 'react';
-import { chains, tokensByChain } from '../data/chainsAndTokens';
+"use client";
+import React, { useState } from "react";
+import IntentCard from "./IntentCard";
 
-export default function IntentForm({ onNewIntent }: { onNewIntent: any }) {
-  const [chain, setChain] = useState(chains[0]);
-  const [token, setToken] = useState(tokensByChain[chains[0]][0]);
-  const [amount, setAmount] = useState('');
-  const [type, setType] = useState<'Swap' | 'Stake'>('Swap');
+type Chain = "Ethereum" | "Polygon" | "Binance Smart Chain" | "Avalanche";
+type Token = "ETH" | "XAN" | "USDT" | "DAI" | "BNB" | "MATIC";
 
-  const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedChain = e.target.value;
-    setChain(selectedChain);
-    setToken(tokensByChain[selectedChain][0]);
+interface Intent {
+  id: number;
+  type: "Swap" | "Stake";
+  chain: Chain;
+  amount: number;
+  token: Token;
+  status: "pending" | "fulfilled";
+}
+
+export default function IntentForm() {
+  const [type, setType] = useState<"Swap" | "Stake">("Swap");
+  const [chain, setChain] = useState<Chain>("Ethereum");
+  const [token, setToken] = useState<Token>("ETH");
+  const [amount, setAmount] = useState<number>(0);
+  const [intents, setIntents] = useState<Intent[]>([]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newIntent: Intent = {
+      id: intents.length + 1,
+      type,
+      chain,
+      token,
+      amount,
+      status: "pending",
+    };
+    setIntents([newIntent, ...intents]);
+    setAmount(0);
   };
 
-  const handleSubmit = () => {
-    onNewIntent({ type, chain, token, amount: parseFloat(amount), tx: '0x' + Math.random().toString(16).slice(2), status: 'pending', date: new Date().toISOString().split('T')[0] });
-    setAmount('');
-  };
+  const chains: Chain[] = ["Ethereum", "Polygon", "Binance Smart Chain", "Avalanche"];
+  const tokens: Token[] = ["ETH", "XAN", "USDT", "DAI", "BNB", "MATIC"];
 
   return (
-    <div className="p-4 bg-cardBg rounded-lg shadow-lg mb-6">
-      <h3 className="text-xl font-bold mb-2">Create Intent</h3>
+    <div className="space-y-6">
+      <form onSubmit={handleSubmit} className="bg-cardBg p-6 rounded-lg shadow-md space-y-4">
+        <div className="flex gap-4">
+          <select value={type} onChange={(e) => setType(e.target.value as any)} className="p-2 rounded bg-bgDark text-white">
+            <option value="Swap">Swap</option>
+            <option value="Stake">Stake</option>
+          </select>
+          <select value={chain} onChange={(e) => setChain(e.target.value as any)} className="p-2 rounded bg-bgDark text-white">
+            {chains.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <select value={token} onChange={(e) => setToken(e.target.value as any)} className="p-2 rounded bg-bgDark text-white">
+            {tokens.map((t) => (
+              <option key={t} value={t}>{t}</option>
+            ))}
+          </select>
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            placeholder="Amount"
+            className="p-2 rounded bg-bgDark text-white flex-1"
+            min={0}
+          />
+          <button type="submit" className="bg-primary px-4 py-2 rounded text-white">Submit</button>
+        </div>
+      </form>
 
-      <label>Type</label>
-      <select value={type} onChange={e => setType(e.target.value as any)} className="w-full mb-2 p-2 rounded bg-gray-800">
-        <option value="Swap">Swap</option>
-        <option value="Stake">Stake</option>
-      </select>
-
-      <label>Chain</label>
-      <select value={chain} onChange={handleChainChange} className="w-full mb-2 p-2 rounded bg-gray-800">
-        {chains.map(c => <option key={c} value={c}>{c}</option>)}
-      </select>
-
-      <label>Token</label>
-      <select value={token} onChange={e => setToken(e.target.value)} className="w-full mb-2 p-2 rounded bg-gray-800">
-        {tokensByChain[chain].map(t => <option key={t} value={t}>{t}</option>)}
-      </select>
-
-      <label>Amount</label>
-      <input type="number" value={amount} onChange={e => setAmount(e.target.value)}
-        className="w-full mb-2 p-2 rounded bg-gray-800"/>
-
-      <button onClick={handleSubmit} className="mt-2 bg-primary text-white px-4 py-2 rounded">Submit Intent</button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {intents.map((intent) => (
+          <IntentCard key={intent.id} intent={intent} />
+        ))}
+      </div>
     </div>
   );
 }
