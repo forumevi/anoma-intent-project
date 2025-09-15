@@ -16,11 +16,14 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div>
+    <div className="p-6 space-y-6">
+      <h2 className="text-3xl font-bold text-white">Dashboard</h2>
       <IntentForm />
-      {intents.map((intent) => (
-        <IntentCard key={intent.id} intent={intent} />
-      ))}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {intents.map((intent) => (
+          <IntentCard key={intent.id} intent={intent} />
+        ))}
+      </div>
     </div>
   );
 }
