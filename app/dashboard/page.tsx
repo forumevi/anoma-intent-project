@@ -1,10 +1,26 @@
+"use client";
+import { useEffect, useState } from "react";
 import IntentForm from "../../components/IntentForm";
+import IntentCard from "../../components/IntentCard";
 
 export default function DashboardPage() {
+  const [intents, setIntents] = useState([]);
+
+  useEffect(() => {
+    async function loadIntents() {
+      const res = await fetch("/api/intents");
+      const data = await res.json();
+      setIntents(data);
+    }
+    loadIntents();
+  }, []);
+
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold">Anoma Multi-Chain Dashboard</h1>
+    <div>
       <IntentForm />
+      {intents.map((intent) => (
+        <IntentCard key={intent.id} intent={intent} />
+      ))}
     </div>
   );
 }
