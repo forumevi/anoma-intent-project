@@ -1,22 +1,23 @@
-import ChainSelector from "../../components/ChainSelector"
-import { useState } from "react"
-import { CHAINS, ChainConfig } from "../../data/chains"
+"use client";
+
+import React from "react";
+import ChainSelector from "../../components/ChainSelector";
+import HistoryTable from "../../components/HistoryTable";
+import { sampleHistory } from "../../data/sampleHistory";
 
 export default function DashboardPage() {
-  const [chain, setChain] = useState<ChainConfig>(CHAINS[0])
-
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
+    <div className="p-6">
+      <h2 className="text-3xl font-bold mb-6">Dashboard</h2>
 
-      {/* Chain seçici */}
-      <ChainSelector onSelect={setChain} />
+      {/* Multichain Dropdown */}
+      <ChainSelector />
 
-      <div className="bg-cardBg p-4 rounded-xl">
-        <p>Active Chain: <span className="font-semibold">{chain.name}</span></p>
-        <p>RPC: {chain.rpc}</p>
-        <p>Explorer: {chain.explorer}</p>
+      {/* History Table */}
+      <div className="mt-6">
+        <h3 className="text-2xl font-semibold mb-4">Intent History</h3>
+        <HistoryTable intents={sampleHistory} />
       </div>
     </div>
-  )
+  );
 }
